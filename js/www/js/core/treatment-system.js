@@ -3,10 +3,11 @@
  * SPA LIFE: EL VIAJE DEL BIENESTAR
  * Sistema de Tratamientos (Treatment System)
  * ============================================================
- * Nota: Este módulo gestiona la fase de tratamiento después de 
- * que el jugador selecciona una terapia correcta. Controla el 
- * flujo, los tiempos de espera simulados, el movimiento del 
- * personaje hacia la cabina y la generación de recompensas.
+ * Nota: Este módulo gestiona la fase de ejecución de tratamiento 
+ * en cabina. Controla el flujo, el movimiento del personaje 
+ * hacia la cabina, el tiempo de simulación y el incremento 
+ * exclusivo de la métrica de Bienestar (el resultado clínico).
+ * No gestiona economía ni reputación para evitar duplicados.
  */
 
 window.SpaLife = window.SpaLife || {};
@@ -134,17 +135,13 @@ window.SpaLife.TreatmentSystem = (function() {
         if (window.SpaLife.showDialogue) window.SpaLife.showDialogue("Sistema", msgFinalizado);
         if (window.SpaLife.announce) window.SpaLife.announce(msgFinalizado);
 
-        // 10 & 11. Generar recompensas utilizando GameState
+        // 10 & 11. Generar recompensas: Exclusivamente Bienestar (Wellness)
+        // La economía (Monedas y Reputación) se delega a módulos como ReceptionGameplay
         if (window.SpaLife.GameState) {
-            const rewardCoins = selectedService.reward || 50;
-            const rewardReputation = selectedService.reputation || 5;
             const wellnessBoost = difficulty * 5;
-
-            window.SpaLife.GameState.addCoins(rewardCoins);
-            window.SpaLife.GameState.addReputation(rewardReputation);
             window.SpaLife.GameState.addWellness(wellnessBoost);
         } else {
-            console.warn('[SpaLife TreatmentSystem] GameState no encontrado. Recompensas omitidas.');
+            console.warn('[SpaLife TreatmentSystem] GameState no encontrado. Recompensa de bienestar omitida.');
         }
 
         // 12. Esperar 2 segundos antes de la salida
