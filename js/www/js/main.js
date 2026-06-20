@@ -112,5 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Anunciar de forma explícita en TalkBack
         window.SpaLife.announce(welcomeMessage);
 
+        // Iniciar la Escena de Recepción automáticamente si el módulo está disponible
+        if (window.SpaLife.ReceptionScene && typeof window.SpaLife.ReceptionScene.init === 'function') {
+            console.log('[SpaLife Boot] Starting Reception Scene...');
+            window.SpaLife.ReceptionScene.init();
+        }
+
     }, 1500);
 });
