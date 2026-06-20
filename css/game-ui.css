@@ -1,0 +1,174 @@
+/* * ============================================================
+ * SPA LIFE: EL VIAJE DEL BIENESTAR
+ * Hoja de Estilos Principal (Fundación Visual)
+ * ============================================================
+ */
+
+/* 1. VARIABLES GLOBALES (THEMING) */
+:root {
+    /* Paleta de Colores - Luxury Wellness */
+    --color-bg: #0d0a08;            /* Fondo oscuro elegante */
+    --color-gold: #d4af37;          /* Acento dorado cálido */
+    --color-text: #ffffff;          /* Texto de alto contraste */
+    --color-panel: rgba(18, 15, 14, 0.75); /* Panel translúcido (Glassmorphism) */
+    --color-highlight: rgba(212, 175, 55, 0.15); /* Resaltado suave dorado */
+
+    /* Tipografía y Espaciado Accesible */
+    --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    
+    /* Efectos Visuales (Luxury Feel) */
+    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.6);
+    --glow-gold: 0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+/* 2. CONFIGURACIÓN DEL CUERPO (FULLSCREEN & MOBILE-FIRST) */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* 100dvh soporta correctamente las barras de navegación en móviles modernos */
+    height: 100vh; 
+    height: 100dvh; 
+    
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    
+    /* Bloqueo de interacciones no deseadas (Experiencia App Nativa) */
+    overflow: hidden; /* Elimina barras de desplazamiento */
+    user-select: none; /* Previene la selección accidental de texto */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* 3. TIPOGRAFÍA GLOBAL Y LEGIBILIDAD */
+h1, h2, h3, p {
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+}
+
+/* 4. CONTENEDOR PRINCIPAL DEL JUEGO */
+#game-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 5. SISTEMA DE CAPAS (Z-INDEX ARCHITECTURE) */
+
+/* Capa Visual (El mapa isométrico 2.5D se renderizará aquí) */
+#game-canvas {
+    position: absolute;
+    inset: 0; /* Equivalente a top:0; right:0; bottom:0; left:0; */
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+/* Capa de Interfaz de Usuario (HUD, Botones, Expedientes) */
+#ui-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    /* Permite que los clics pasen al canvas donde no hay elementos UI */
+    pointer-events: none; 
+}
+/* Los elementos interactivos dentro de ui-layer deberán tener pointer-events: auto; */
+#ui-layer > * {
+    pointer-events: auto;
+}
+
+/* Capa de Diálogos (Fija en la parte inferior) */
+#dialogue-layer {
+    position: fixed;
+    bottom: 2rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    z-index: 30;
+    
+    /* Efecto Glassmorphism */
+    background-color: var(--color-panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 28px;
+    
+    padding: 1.8rem;
+    box-shadow: var(--shadow-soft);
+}
+
+/* Capa de Accesibilidad (Oculta visualmente, activa para lectores de pantalla) */
+#accessibility-layer {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+    z-index: 40;
+}
+
+/* 6. PANTALLA DE CARGA (LOADING SCREEN) */
+
+/* Animación de entrada suave */
+@keyframes vtxFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#loading-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    animation: vtxFadeIn 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+#logo-placeholder {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 2px solid var(--color-gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-bottom: 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-gold);
+    
+    /* Efecto de brillo de lujo */
+    box-shadow: var(--glow-gold), inset 0 0 20px rgba(212, 175, 55, 0.1);
+    background-color: var(--color-highlight);
+}
+
+#loading-screen h1 {
+    /* Tipografía fluida que se adapta al tamaño de la pantalla */
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 300;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+}
+
+#loading-screen h2 {
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
