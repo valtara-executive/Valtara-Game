@@ -1,94 +1,283 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    
-    <meta name="theme-color" content="#d4af37">
-    
-    <title>Spa Life: El Viaje del Bienestar</title>
+<!DOCTYPE html><html lang="es"><head><!-- ===================================================== -->
+<!-- METADATOS BASE -->
+<!-- ===================================================== -->
 
-    <link rel="stylesheet" href="css/game-ui.css">
-    <link rel="stylesheet" href="css/a11y-talkback.css">
-</head>
-<body>
+<meta charset="UTF-8">
 
-    <section id="loading-screen" role="alert" aria-busy="true" aria-live="polite" aria-label="Pantalla de carga">
-        <div id="logo-placeholder" aria-hidden="true">
-            [ LOGO ]
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no,
+               viewport-fit=cover">
+
+<meta name="theme-color" content="#d4af37">
+<meta name="color-scheme" content="dark">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="apple-mobile-web-app-title"
+      content="Spa Life">
+
+<meta name="description"
+      content="Spa Life: El Viaje del Bienestar">
+
+<title>Spa Life: El Viaje del Bienestar</title>
+
+<!-- ===================================================== -->
+<!-- PRELOADS -->
+<!-- ===================================================== -->
+
+<link rel="preload"
+      href="css/game-ui.css"
+      as="style">
+
+<link rel="preload"
+      href="css/a11y-talkback.css"
+      as="style">
+
+<!-- ===================================================== -->
+<!-- ESTILOS -->
+<!-- ===================================================== -->
+
+<link rel="stylesheet"
+      href="css/game-ui.css">
+
+<link rel="stylesheet"
+      href="css/a11y-talkback.css">
+
+</head><body><!-- ===================================================== -->
+<!-- APP ROOT -->
+<!-- ===================================================== -->
+
+<div id="app-root">
+
+    <!-- ================================================= -->
+    <!-- SPLASH / BOOT SCREEN -->
+    <!-- ================================================= -->
+
+    <section id="loading-screen"
+             role="alert"
+             aria-busy="true"
+             aria-live="polite"
+             aria-label="Pantalla de carga">
+
+        <div class="loading-background"></div>
+
+        <div class="loading-content">
+
+            <div id="logo-placeholder"
+                 aria-hidden="true">
+                ✨
+            </div>
+
+            <h1>Spa Life</h1>
+
+            <p>
+                El Viaje del Bienestar
+            </p>
+
+            <div class="loading-spinner"></div>
+
         </div>
-        
-        <h1>Spa Life</h1>
-        <h2>El Viaje del Bienestar</h2>
+
     </section>
 
-    <main id="game-container" role="main" aria-label="Área principal del juego">
-        
-        <div id="game-canvas" aria-hidden="true">
+    <!-- ================================================= -->
+    <!-- CONTENEDOR PRINCIPAL -->
+    <!-- ================================================= -->
+
+    <main id="game-container"
+          role="main"
+          aria-label="Área principal del juego">
+
+        <!-- ============================================= -->
+        <!-- CANVAS DEL MUNDO -->
+        <!-- ============================================= -->
+
+        <div id="game-canvas"
+             aria-hidden="true">
         </div>
 
-        <nav id="ui-layer" aria-label="Interfaz de controles y menús">
+        <!-- ============================================= -->
+        <!-- EFECTOS VISUALES -->
+        <!-- ============================================= -->
+
+        <div id="effects-layer"
+             aria-hidden="true">
+        </div>
+
+        <!-- ============================================= -->
+        <!-- PERSONAJES -->
+        <!-- ============================================= -->
+
+        <div id="character-layer"
+             aria-hidden="true">
+        </div>
+
+        <!-- ============================================= -->
+        <!-- UI PRINCIPAL -->
+        <!-- ============================================= -->
+
+        <nav id="ui-layer"
+             aria-label="Interfaz del juego">
         </nav>
 
-        <section id="dialogue-layer" role="region" aria-label="Diálogos de personajes" aria-live="polite">
+        <!-- ============================================= -->
+        <!-- MENÚS Y PANELES -->
+        <!-- ============================================= -->
+
+        <div id="menu-layer"
+             aria-hidden="true">
+        </div>
+
+        <!-- ============================================= -->
+        <!-- MODALES -->
+        <!-- ============================================= -->
+
+        <div id="modal-layer"
+             aria-hidden="true">
+        </div>
+
+        <!-- ============================================= -->
+        <!-- NOTIFICACIONES -->
+        <!-- ============================================= -->
+
+        <div id="notification-layer"
+             aria-live="polite"
+             aria-label="Notificaciones">
+        </div>
+
+        <!-- ============================================= -->
+        <!-- DIÁLOGOS -->
+        <!-- ============================================= -->
+
+        <section id="dialogue-layer"
+                 role="region"
+                 aria-live="polite"
+                 aria-label="Diálogos del juego">
         </section>
 
-        <div id="accessibility-layer" role="region" aria-label="Controles de accesibilidad y eventos del spa" aria-live="assertive">
+        <!-- ============================================= -->
+        <!-- ACCESIBILIDAD -->
+        <!-- ============================================= -->
+
+        <div id="accessibility-layer"
+             role="region"
+             aria-live="assertive"
+             aria-label="Mensajes de accesibilidad">
         </div>
 
     </main>
 
-    <script>
-        console.log('[SpaLife] Index loaded successfully.');
-    </script>
-    
-    <script src="js/www/js/data/pool-perfiles.js" defer></script>
-    <script src="js/www/js/data/services.js" defer></script>
+</div>
 
-    <script src="js/www/js/core/game-state.js" defer></script>
-    <script src="js/www/js/core/reception-gameplay.js" defer></script>
-    <script src="js/www/js/engine/character-system.js" defer></script>
-    <script src="js/www/js/engine/reception-scene.js" defer></script>
-    <script src="js/www/js/main.js" defer></script>
 <!-- ===================================================== -->
-<!-- MÓDULOS CORE -->
+<!-- LOG DE CARGA -->
 <!-- ===================================================== -->
 
+<script>
+    console.log('[SpaLife] HTML Loaded');
+</script>
+
+<!-- ===================================================== -->
+<!-- DATA -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/data/pool-perfiles.js" defer></script>
+<script src="js/www/js/data/services.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- CORE FOUNDATION -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/game-state.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- CORE GAMEPLAY -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/customer-flow.js" defer></script>
+<script src="js/www/js/core/day-system.js" defer></script>
 <script src="js/www/js/core/progression-system.js" defer></script>
 <script src="js/www/js/core/treatment-system.js" defer></script>
 
 <!-- ===================================================== -->
-<!-- MÓDULOS UI -->
+<!-- WORLD -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/zone-system.js" defer></script>
+<script src="js/www/js/core/unlock-system.js" defer></script>
+<script src="js/www/js/core/cabin-manager.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- PLAYER -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/statistics-system.js" defer></script>
+<script src="js/www/js/core/achievement-system.js" defer></script>
+<script src="js/www/js/core/mission-system.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- ECONOMÍA -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/economy-system.js" defer></script>
+<script src="js/www/js/core/staff-system.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- EVENTOS -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/event-system.js" defer></script>
+<script src="js/www/js/core/vip-system.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- GUARDADO -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/core/save-system.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- UI -->
 <!-- ===================================================== -->
 
 <script src="js/www/js/ui/hud.js" defer></script>
+<script src="js/www/js/ui/save-ui.js" defer></script>
 
 <!-- ===================================================== -->
-<!-- ROADMAP FUTURO (DESCOMENTAR CUANDO EXISTAN) -->
+<!-- ENGINE -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/engine/character-system.js" defer></script>
+<script src="js/www/js/engine/reception-scene.js" defer></script>
+<script src="js/www/js/core/reception-gameplay.js" defer></script>
+
+<!-- ===================================================== -->
+<!-- FUTUROS MÓDULOS -->
 <!-- ===================================================== -->
 
 <!--
-<script src="js/www/js/core/customer-flow.js" defer></script>
-<script src="js/www/js/core/zone-system.js" defer></script>
-<script src="js/www/js/core/unlock-system.js" defer></script>
-<script src="js/www/js/core/economy-system.js" defer></script>
-<script src="js/www/js/core/objectives-system.js" defer></script>
-<script src="js/www/js/core/staff-system.js" defer></script>
+<script src="js/www/js/core/tutorial-system.js" defer></script>
+<script src="js/www/js/core/settings-system.js" defer></script>
+<script src="js/www/js/core/audio-system.js" defer></script>
+<script src="js/www/js/core/notification-system.js" defer></script>
+<script src="js/www/js/core/analytics-system.js" defer></script>
 
-<script src="js/www/js/ui/save-ui.js" defer></script>
-<script src="js/www/js/ui/objectives-ui.js" defer></script>
-<script src="js/www/js/ui/shop-ui.js" defer></script>
-<script src="js/www/js/ui/staff-ui.js" defer></script>
+<script src="js/www/js/ui/tutorial-ui.js" defer></script>
+<script src="js/www/js/ui/settings-ui.js" defer></script>
 
 <script src="js/www/js/engine/pathfinding-system.js" defer></script>
 <script src="js/www/js/engine/animation-system.js" defer></script>
-<script src="js/www/js/engine/zone-renderer.js" defer></script>
-<script src="js/www/js/engine/audio-system.js" defer></script>
+-->
 
-<script src="js/www/js/data/objectives.js" defer></script>
-<script src="js/www/js/data/staff-profiles.js" defer></script>
-<script src="js/www/js/data/shop-items.js" defer></script>
--->    
-</body>
-</html>
+<!-- ===================================================== -->
+<!-- BOOT SYSTEM (SIEMPRE EL ÚLTIMO) -->
+<!-- ===================================================== -->
+
+<script src="js/www/js/main.js" defer></script>
+
+</body></html>
