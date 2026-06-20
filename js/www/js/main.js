@@ -4,8 +4,9 @@
  * Sistema de Arranque (Boot System)
  * ============================================================
  * Nota: Este archivo inicializa la aplicación de forma segura.
- * No contiene el bucle del juego, lógicas de simulación ni 
- * renderizado complejo.
+ * Actúa como el centro neurálgico de inicialización, gestionando
+ * la carga dinámica y escalable de más de 30 módulos previstos
+ * para la arquitectura final del simulador.
  */
 
 // 1. CREACIÓN DEL NAMESPACE GLOBAL Y ESTADO BÁSICO
@@ -21,7 +22,9 @@ window.SpaLife.state = {
 // Almacenamiento de referencias del DOM para acceso rápido y seguro
 window.SpaLife.layers = {};
 
-// 2. DEFINICIÓN DE MÉTODOS DEL SISTEMA
+// ============================================================
+// 2. DEFINICIÓN DE UTILIDADES DEL SISTEMA CENTRAL
+// ============================================================
 
 /**
  * Muestra un diálogo en la capa correspondiente utilizando las clases de accesibilidad.
@@ -52,7 +55,67 @@ window.SpaLife.announce = (message) => {
     a11yLayer.textContent = message;
 };
 
-// 3. SECUENCIA DE INICIALIZACIÓN (DOM READY)
+/**
+ * Inicializa un módulo de la arquitectura de forma segura.
+ * Verifica su existencia y la presencia del método init().
+ * Previene errores fatales si un módulo futuro aún no ha sido implementado.
+ * @param {string} name - Nombre del módulo en window.SpaLife (ej. 'HUD').
+ * @param {string} [path] - Ruta teórica del módulo para propósitos de logging.
+ */
+const initializeModule = (name, path = '') => {
+    if (window.SpaLife[name]) {
+        if (typeof window.SpaLife[name].init === 'function') {
+            try {
+                window.SpaLife[name].init();
+                console.log(`[SpaLife Boot] Module Ready: ${name}`);
+            } catch (error) {
+                // Captura de errores internos del módulo para no detener el Boot Sequence
+                console.error(`[SpaLife Boot] Module Error (${name}):`, error);
+            }
+        } else {
+            // Módulos de datos o utilitarios que no requieren inicialización activa
+            console.log(`[SpaLife Boot] Module Ready (Passive): ${name}`);
+        }
+    } else {
+        // Advertencia no fatal para módulos planeados pero no implementados
+        console.warn(`[SpaLife Boot] Module Missing: ${name}`);
+    }
+};
+
+// ============================================================
+// 3. REGISTRO DE MÓDULOS DEL NÚCLEO (CORE ARCHITECTURE)
+// ============================================================
+
+/**
+ * Arreglo maestro que define todos los sistemas que componen o compondrán 
+ * el motor de Spa Life. El Boot System los recorrerá automáticamente.
+ */
+const modules = [
+    'HUD',
+    'ZoneSystem',
+    'CustomerFlow',
+    'DaySystem',
+    'ProgressionSystem',
+    'UnlockSystem',
+    'StatisticsSystem',
+    'SaveUI',
+    'EventSystem',
+    'VIPSystem',
+    'StaffSystem',
+    'EconomySystem',
+    'AchievementSystem',
+    'MissionSystem',
+    'TutorialSystem',
+    'SettingsSystem',
+    'AudioSystem',
+    'NotificationSystem',
+    'AnalyticsSystem',
+    'CabinManager'
+];
+
+// ============================================================
+// 4. SECUENCIA DE INICIALIZACIÓN (DOM READY)
+// ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -79,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Abortar si falta algún elemento crucial
+    // Abortar si falta algún elemento crucial estructural
     if (!isEnvironmentValid) {
         console.error('[SpaLife Boot] Inicialización abortada debido a elementos DOM faltantes.');
         return;
@@ -89,7 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[SpaLife Boot] Todas las capas requeridas han sido verificadas exitosamente.');
     window.SpaLife.state.isLoaded = true;
 
-    // 4. TRANSICIÓN DE ARRANQUE (BOOT SEQUENCE)
+    // ============================================================
+    // 5. TRANSICIÓN DE ARRANQUE (BOOT SEQUENCE)
+    // ============================================================
     
     // Esperar 1500ms para simular el proceso de carga antes de iniciar la UI
     setTimeout(() => {
@@ -117,29 +182,42 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeMessage
         );
 
-        // Inicializar HUD
-        if (
-            window.SpaLife.HUD &&
-            typeof window.SpaLife.HUD.init === 'function'
-        ) {
-            console.log('[SpaLife Boot] Starting HUD...');
-            window.SpaLife.HUD.init();
-        }
+        // ------------------------------------------------------------
+        // FASE A: Inicialización del Registro de Módulos
+        // ------------------------------------------------------------
+        console.log('[SpaLife Boot] Inicializando arquitectura principal...');
+        modules.forEach(moduleName => {
+            initializeModule(moduleName);
+        });
 
-        // Inicializar Escena de Recepción
+        // ------------------------------------------------------------
+        // FASE B: Arranque Exclusivo de Escenas y Controladores de Flujo
+        // Se ejecuta después de la inicialización pasiva de módulos
+        // ------------------------------------------------------------
+
+        // 1 & 2. HUD y ZoneSystem ya fueron inicializados en el loop anterior.
+        // Se garantiza que sus constructores visuales están activos antes de la escena.
+
+        // 3. Inicializar Escena de Recepción
         if (
             window.SpaLife.ReceptionScene &&
             typeof window.SpaLife.ReceptionScene.init === 'function'
         ) {
             console.log('[SpaLife Boot] Starting Reception Scene...');
             window.SpaLife.ReceptionScene.init();
+        } else {
+            console.warn('[SpaLife Boot] ReceptionScene no está disponible.');
         }
 
-        // Confirmar ProgressionSystem
+        // 4. Arrancar de manera única el flujo de la jornada
         if (
-            window.SpaLife.ProgressionSystem
+            window.SpaLife.DaySystem &&
+            typeof window.SpaLife.DaySystem.startDay === 'function'
         ) {
-            console.log('[SpaLife Boot] Progression System Ready.');
+            console.log('[SpaLife Boot] Starting Day Flow...');
+            window.SpaLife.DaySystem.startDay();
+        } else {
+            console.warn('[SpaLife Boot] DaySystem no está disponible para iniciar la jornada.');
         }
 
     }, 1500);
