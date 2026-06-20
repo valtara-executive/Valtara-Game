@@ -1,85 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- 1. METADATOS BÁSICOS -->
     <meta charset="UTF-8">
     
-    <!-- Configuración Viewport: Mobile-first, pantalla completa, bloquea zoom para evitar toques accidentales -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- Color de tema para la barra de estado de Android (Tono cálido/relajante por defecto) -->
     <meta name="theme-color" content="#d4af37">
     
     <title>Spa Life: El Viaje del Bienestar</title>
 
-    <!-- 2. CARGA DE ESTILOS FUTUROS -->
-    <!-- Estilos de la interfaz de usuario, HUD y contenedores visuales -->
     <link rel="stylesheet" href="css/game-ui.css">
-    <!-- Estilos específicos para alto contraste, tipografía grande y lectores de pantalla -->
     <link rel="stylesheet" href="css/a11y-talkback.css">
 </head>
 <body>
 
-    <!-- 3. PANTALLA DE CARGA INICIAL -->
-    <!-- Utiliza aria-busy para indicar a TalkBack que la aplicación está procesando -->
     <section id="loading-screen" role="alert" aria-busy="true" aria-live="polite" aria-label="Pantalla de carga">
-        <!-- Placeholder para el logotipo -->
         <div id="logo-placeholder" aria-hidden="true">
             [ LOGO ]
         </div>
         
-        <!-- Títulos principales -->
         <h1>Spa Life</h1>
         <h2>El Viaje del Bienestar</h2>
     </section>
 
-    <!-- 4. CONTENEDOR PRINCIPAL DEL JUEGO -->
-    <!-- Etiqueta main establece el punto de referencia (landmark) central para lectores de pantalla -->
     <main id="game-container" role="main" aria-label="Área principal del juego">
         
-        <!-- A. CAPA VISUAL (CANVAS) -->
-        <!-- Oculto para lectores de pantalla mediante aria-hidden, ya que contendrá renderizado 2.5D visual -->
         <div id="game-canvas" aria-hidden="true">
-            <!-- Aquí se inyectará el motor de renderizado gráfico (ej. PixiJS o DOM Absoluto) -->
-        </div>
+            </div>
 
-        <!-- B. CAPA DE INTERFAZ DE USUARIO (HUD) -->
-        <!-- Contendrá botones, menús, expedientes de pacientes y la tienda -->
         <nav id="ui-layer" aria-label="Interfaz de controles y menús">
-            <!-- Los elementos interactivos se renderizarán aquí -->
-        </nav>
+            </nav>
 
-        <!-- C. CAPA DE DIÁLOGOS -->
-        <!-- Región interactiva que anuncia los textos automáticamente usando aria-live="polite" -->
         <section id="dialogue-layer" role="region" aria-label="Diálogos de personajes" aria-live="polite">
-            <!-- Los diálogos inmersivos y necesidades de los clientes aparecerán aquí -->
-        </section>
+            </section>
 
-        <!-- D. CAPA DE ACCESIBILIDAD -->
-        <!-- Capa oculta visualmente pero expuesta a TalkBack para descripciones espaciales, atajos o alertas críticas -->
         <div id="accessibility-layer" role="region" aria-label="Controles de accesibilidad y eventos del spa" aria-live="assertive">
-            <!-- Nodos DOM descriptivos generados proceduralmente (ej. "El paciente ha entrado a la Zona 3") -->
-        </div>
+            </div>
 
     </main>
 
-    <!-- 5. CARGA DE SCRIPTS FUTUROS -->
-    
     <script>
         console.log('[SpaLife] Index loaded successfully.');
     </script>
     
-    <!-- Nota: El repositorio utiliza actualmente una estructura de carpetas anidada (js/www/js/) para los scripts -->
-    <!-- Script principal diferido para garantizar que el DOM esté listo antes de la ejecución -->
-    <script src="js/www/js/main.js" defer></script>
-    
-    <!-- Future modules -->
-    <!--
-    <script src="js/www/js/core/game-state.js" defer></script>
-    <script src="js/www/js/data/services.js" defer></script>
     <script src="js/www/js/data/pool-perfiles.js" defer></script>
     <script src="js/www/js/engine/character-system.js" defer></script>
-    -->
+    <script src="js/www/js/engine/reception-scene.js" defer></script>
+    <script src="js/www/js/main.js" defer></script>
     
-</body>
+    </body>
 </html>
