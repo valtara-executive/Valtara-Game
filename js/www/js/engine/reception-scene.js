@@ -174,19 +174,40 @@ window.SpaLife.ReceptionScene = (function() {
         window.SpaLife.CharacterSystem.setState(currentCustomer.id, 'talking');
         window.SpaLife.CharacterSystem.setState(receptionist.id, 'talking');
 
-        // 5. Mostrar el diálogo en el HUD (Capa de diálogos)
-        window.SpaLife.showDialogue(profile.name, profile.dialogue);
+        // 5 y 6. Mostrar el diálogo y anunciarlo a TalkBack, luego abrir menú de terapias
+        window.SpaLife.showDialogue(
+            profile.name,
+            profile.dialogue
+        );
 
-        // 6. Anunciar estrictamente para lectores de pantalla (TalkBack)
-        const announcementText = `El cliente ${profile.name} ha llegado. Dice: ${profile.dialogue}`;
-        window.SpaLife.announce(announcementText);
+        const announcementText =
+            `El cliente ${profile.name} ha llegado. Dice: ${profile.dialogue}`;
 
-        // 7. Después de 8 segundos, ambos personajes vuelven al estado de reposo (idle)
+        window.SpaLife.announce(
+            announcementText
+        );
+
         setTimeout(() => {
-            window.SpaLife.CharacterSystem.setState(currentCustomer.id, 'idle');
-            window.SpaLife.CharacterSystem.setState(receptionist.id, 'idle');
-            // Nota: Aquí se podría integrar la lógica para despachar al cliente y abrir menú
-        }, 8000);
+
+            if (
+                window.SpaLife.ReceptionGameplay &&
+                typeof window.SpaLife.ReceptionGameplay.init === 'function'
+            ) {
+
+                window.SpaLife.ReceptionGameplay.init(
+                    profile,
+                    currentCustomer
+                );
+
+            } else {
+
+                console.warn(
+                    '[SpaLife ReceptionScene] ReceptionGameplay not available.'
+                );
+
+            }
+
+        }, 1500);
     }
 
     // ============================================================
