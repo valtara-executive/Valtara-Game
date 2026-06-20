@@ -106,16 +106,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const welcomeSpeaker = 'Sistema';
         const welcomeMessage = 'Bienvenido a Spa Life. Tu viaje en el bienestar está por comenzar.';
 
-        // Mostrar en pantalla (Capa visual de diálogos)
-        window.SpaLife.showDialogue(welcomeSpeaker, welcomeMessage);
+        // Mostrar en pantalla
+        window.SpaLife.showDialogue(
+            welcomeSpeaker,
+            welcomeMessage
+        );
 
-        // Anunciar de forma explícita en TalkBack
-        window.SpaLife.announce(welcomeMessage);
+        // Anunciar en TalkBack
+        window.SpaLife.announce(
+            welcomeMessage
+        );
 
-        // Iniciar la Escena de Recepción automáticamente si el módulo está disponible
-        if (window.SpaLife.ReceptionScene && typeof window.SpaLife.ReceptionScene.init === 'function') {
+        // Inicializar HUD
+        if (
+            window.SpaLife.HUD &&
+            typeof window.SpaLife.HUD.init === 'function'
+        ) {
+            console.log('[SpaLife Boot] Starting HUD...');
+            window.SpaLife.HUD.init();
+        }
+
+        // Inicializar Escena de Recepción
+        if (
+            window.SpaLife.ReceptionScene &&
+            typeof window.SpaLife.ReceptionScene.init === 'function'
+        ) {
             console.log('[SpaLife Boot] Starting Reception Scene...');
             window.SpaLife.ReceptionScene.init();
+        }
+
+        // Confirmar ProgressionSystem
+        if (
+            window.SpaLife.ProgressionSystem
+        ) {
+            console.log('[SpaLife Boot] Progression System Ready.');
         }
 
     }, 1500);
